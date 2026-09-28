@@ -12,7 +12,7 @@ O Forja AI é uma aplicação web que gera landing pages completas (HTML + CSS) 
 
 - Front-end: JavaScript (ES6+), HTML5, CSS3 (Glassmorphism & Dark Mode)
 - Back-end / Serverless: Netlify Functions (Node.js)
-- AI / LLM: Groq Cloud API (modelo Llama 3.3 / GPT-OSS-120b)
+- AI / LLM: Groq Cloud API (modelo `openai/gpt-oss-120b`)
 - Hospedagem e Deploy: Netlify
 
 ---
@@ -29,7 +29,7 @@ O Forja AI é uma aplicação web que gera landing pages completas (HTML + CSS) 
 ## Como Funciona a Arquitetura
 
 1. O usuário preenche os detalhes do negócio no formulário do front-end.
-2. O front-end envia uma requisição POST para a Netlify Function (`/netlify/functions/gerar.js`).
+2. O front-end envia uma requisição POST para `/.netlify/functions/gerar`. A função está em `netlify/functions/gerar.js`.
 3. A função serverless chama a API da Groq utilizando a chave de API armazenada de forma segura nas variáveis de ambiente.
 4. O HTML e o CSS retornados pela IA são renderizados dinamicamente no painel de prévia.
 
@@ -62,8 +62,8 @@ O Forja AI é uma aplicação web que gera landing pages completas (HTML + CSS) 
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/Asapx380/gerador-landing-pages.git
-   cd gerador-landing-pages
+   git clone https://github.com/Asapx380/ai-landing-page-generator.git
+   cd ai-landing-page-generator
    ```
 
 2. Configure a variável de ambiente:
