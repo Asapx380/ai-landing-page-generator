@@ -2,11 +2,21 @@
 
 exports.handler = async function (event) {
     if (event.httpMethod !== "POST") {
-        return { statusCode: 405, body: "Método não permitido" };
+        return { statusCode: 405, headers: { Allow: "POST", "Content-Type": "application/json" }, body: JSON.stringify({ erro: "Método não permitido" }) };
+    }
+
+    let entrada;
+    try {
+        entrada = JSON.parse(event.body || "null");
+    } catch {
+        return { statusCode: 400, body: JSON.stringify({ erro: "Envie um JSON válido." }) };
+    }
+    if (!entrada || typeof entrada !== "object" || Array.isArray(entrada)) {
+        return { statusCode: 400, body: JSON.stringify({ erro: "Envie uma descrição válida." }) };
     }
 
     try {
-        const { texto } = JSON.parse(event.body);
+        const { texto } = entrada;
 
         const prompt = `Você cria landing pages em português para negócios reais.
 Gere uma página inicial clara, específica e pronta para ser editada a partir da descrição recebida.
@@ -53,6 +63,7 @@ Todo o texto deve ser natural, objetivo e específico para o negócio descrito.`
         const timeoutId = setTimeout(() => controller.abort(), 20000);
 
         let resposta;
+        let dados;
         try {
             resposta = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: "POST",
@@ -69,11 +80,10 @@ Todo o texto deve ser natural, objetivo e específico para o negócio descrito.`
                 }),
                 signal: controller.signal,
             });
+            dados = await resposta.json();
         } finally {
             clearTimeout(timeoutId);
         }
-
-        const dados = await resposta.json();
 
         if (!resposta.ok) {
             const mensagemGroq = dados && dados.error && dados.error.message;
