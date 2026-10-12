@@ -76,3 +76,15 @@ O Forja AI é uma aplicação web que gera landing pages completas (HTML + CSS) 
    ```bash
    netlify dev
    ```
+
+## Validação e manutenção
+
+Use Node.js 22 ou superior. O projeto não possui dependências npm de execução.
+
+```bash
+npm run check
+```
+
+O comando verifica a sintaxe dos scripts e executa os testes em `tests/`. Os testes simulam a Groq e não precisam de chave nem fazem chamadas reais. Para desenvolvimento com a função serverless, copie `.env.example` para `.env`, preencha a chave e execute `netlify dev`. Um servidor estático sozinho não executa a função.
+
+A chave `GROQ_API_KEY` também precisa ser configurada nas variáveis de ambiente do site na Netlify. Não a coloque no HTML ou no código do navegador. A prévia é um rascunho: revise o resultado antes de publicá-lo.

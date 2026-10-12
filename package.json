@@ -1,0 +1,13 @@
+{
+  "name": "forja-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Gerador de landing pages com Netlify Functions e Groq.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "node --check js/scripts.js && node --check netlify/functions/gerar.js && npm test"
+  }
+}
